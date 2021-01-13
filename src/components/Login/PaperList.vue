@@ -1,18 +1,38 @@
 <template>
   <el-card>
     <div slot="header" class="clearfix">
-      <span>最新发布</span>
-      <el-button style="float: right; padding: 3px 0">最新发布</el-button>
-      <el-button style="float: right; padding: 3px 0">最多浏览</el-button>
-      <el-button style="float: right; padding: 3px 0">最多关注</el-button>
+      <span>{{header[status]}}</span>
+      <el-button type="primary"
+                 @click="useTime"
+                 class="left-font" round plain>最新发布</el-button>
+      <el-button type="success"
+                 @click="useWatch"
+                 class="left-font" round plain>最多浏览</el-button>
+      <el-button type="info"
+                 @click="useLove"
+                 class="left-font" round plain>最多关注</el-button>
     </div>
-    <el-card v-for="paper in paperList" :key="paper.id">
-      <div>{{paper.title}}</div>
-      <div>{{paper.username}}</div>
-      <div>{{paper.love}}</div>
-      <div>{{paper.watch}}</div>
-      <div>{{paper.time}}</div>
+    <el-card v-for="paper in paperList"
+             :key="paper.id"
+             style="margin: 1%">
+      <div slot="header" class="clearfix">
+        <span>{{paper.title}}</span>
+        <span class="left-font">作者：{{paper.username}}</span>
+      </div>
+      <div slot="default" class="clearfix">
+        <span class="left-font text item">点赞：{{paper.love}}</span>
+        <span class="left-font text item">浏览：{{paper.watch}}</span>
+        <span class="left-font text item">最后修改时间：{{paper.time}}</span>
+      </div>
     </el-card>
+    <div style="text-align: center">
+      <el-pagination layout="prev, pager, next"
+                     :current-page.sync="currentPage"
+                     :page-size="size"
+                     @current-change="changPage"
+                     :total="total" background>
+      </el-pagination>
+    </div>
   </el-card>
 </template>
 
@@ -21,7 +41,60 @@ export default {
   name: 'PaperList',
   data () {
     return {
-      paperList: this.$store.state.paperList.paperList
+      paperList: this.$store.state.paperList.paperList,
+      para: ['/time', '/love', '/watch'],
+      url: '/PaperList',
+      index: 0,
+      size: 3,
+      userId: -1,
+      total: 0,
+      header: ['最新发布', '最多关注', '最多浏览'],
+      status: 0,
+      currentPage: 1
+    }
+  },
+  methods: {
+    genUrl (type) {
+      let request
+      if (this.userId === -1) {
+        request = this.url + this.para[type] + '?' + 'index=' + this.index + '&' + 'size=' + this.size
+      } else {
+        request = this.url + '/' + this.userId + this.para[type] + '?' + 'index=' + this.in + '&' + 'size=' + this.size
+      }
+      return request
+    },
+    refresh (request) {
+      this.$axios(request)
+        .then(successResponse => {
+          console.log(successResponse.data.result)
+          if (successResponse.data.code === 200) {
+            this.$store.commit({
+              type: 'refreshPaperItems',
+              list: successResponse.data.result
+            })
+          }
+        })
+    },
+    useTime () {
+      let request = this.genUrl(0)
+      this.refresh(request)
+      this.status = 0
+    },
+    useLove () {
+      let request = this.genUrl(1)
+      this.refresh(request)
+      this.status = 1
+    },
+    useWatch () {
+      let request = this.genUrl(2)
+      this.refresh(request)
+      this.status = 2
+    },
+    changPage () {
+      console.log(this.currentPage)
+      this.index = this.currentPage - 1
+      let genUrl = this.genUrl(this.status)
+      this.refresh(genUrl)
     }
   },
   beforeCreate () {
@@ -36,16 +109,30 @@ export default {
           })
         }
       })
+  },
+  created () {
+    let countUrl = '/Page/count'
+    if (this.userId === -1) countUrl = '/Page/count'
+    else countUrl = '/Page/count/' + this.userId
+    console.log(countUrl)
+    this.$axios
+      .request(countUrl)
+      .then(successResponse => {
+        if (successResponse.data.code === 200) {
+          this.total = successResponse.data.result
+          console.log(this.total)
+        }
+      })
   }
 }
 </script>
 
 <style scoped>
   .text {
-    font-size: 14px;
+    font-size: 4px;
   }
   .item {
-    margin-bottom: 18px;
+    float: bottom;
   }
   .clearfix:before,
   .clearfix:after {
@@ -57,5 +144,10 @@ export default {
   }
   .box-card {
     width: 480px;
+  }
+  .left-font {
+    float: right;
+    padding: 1% 1%;
+    margin: 1%;
   }
 </style>
