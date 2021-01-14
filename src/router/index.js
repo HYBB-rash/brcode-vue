@@ -9,6 +9,7 @@ import Paper from '../components/Paper'
 import Comments from '../components/Comments'
 import PaperPage from '../components/Home/PaperPage'
 import UserHome from '../components/Home/UserHome'
+import EditPage from '../components/Home/EditPage'
 
 Vue.use(Router)
 
@@ -64,6 +65,11 @@ export default new Router({
       path: '/userHome',
       name: 'UserHome',
       component: UserHome
+    },
+    {
+      path: '/editPage',
+      name: 'EditPage',
+      component: EditPage
     }
   ]
 })

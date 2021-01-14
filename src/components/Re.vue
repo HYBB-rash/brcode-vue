@@ -1,7 +1,7 @@
 <template>
   <el-card>
     <el-row>
-      <el-col :span="6">{{username}}:</el-col>
+      <el-col :span="6">回复{{username}}:</el-col>
       <el-col :span="18">{{comment.content}}</el-col>
     </el-row>
   </el-card>

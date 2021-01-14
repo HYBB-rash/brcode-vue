@@ -5,6 +5,7 @@ import paperListStore from './Com/paperList'
 import userMessageStore from './Com/userMessage'
 import paperStore from './Com/paper'
 import commentsStore from './Com/comments'
+import editPaperStore from './Com/editPaper'
 
 Vue.use(Vuex)
 export default new Vuex.Store({
@@ -13,6 +14,7 @@ export default new Vuex.Store({
     paperList: paperListStore,
     userMessage: userMessageStore,
     paper: paperStore,
-    comments: commentsStore
+    comments: commentsStore,
+    editPaper: editPaperStore
   }
 })

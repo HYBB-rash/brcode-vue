@@ -8,6 +8,10 @@ import 'element-ui/lib/theme-chalk/index.css'
 import store from './store'
 import 'github-markdown-css/github-markdown.css'
 import hljs from 'highlight.js'
+import mavonEditor from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
+
+Vue.use(mavonEditor)
 Vue.directive('highlight', function (el) {
   const blocks = el.querySelectorAll('pre code')
   blocks.forEach(block => {
