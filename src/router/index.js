@@ -3,7 +3,8 @@ import Router from 'vue-router'
 import Login from '../components/Login/Login'
 import Regis from '../components/Login/Regis'
 import Home from '../components/Home/Home'
-import PaperList from '../components/Login/PaperList'
+import PaperList from '../components/PaperList'
+import UserMessage from '../components/UserMessage'
 
 Vue.use(Router)
 
@@ -34,6 +35,11 @@ export default new Router({
       path: '/paperList',
       name: 'PaperList',
       component: PaperList
+    },
+    {
+      path: '/userMessage',
+      name: 'UserMessage',
+      component: UserMessage
     }
   ]
 })
