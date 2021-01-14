@@ -35,17 +35,31 @@
     </el-row>
 <!--    直接展示-->
     <el-row v-else>
-      <el-col :span="4">
+      <el-col :span="6">
         <div style="text-align: center">
-          <user-icon v-bind:userId="userId"></user-icon>
+          <user-icon v-bind:size="150" v-bind:userId="userId"></user-icon>
         </div>
-        <div style="text-align: center">{{message.username}}</div>
+        <h3 style="text-align: center">{{message.username}}</h3>
       </el-col>
-      <el-col :span="20">
-        <div style="min-height: 50px">{{instruction}}</div>
-        <span>  浏览量：{{message.watch}}</span>
-        <span>  点赞数：{{message.love}}</span>
-        <span>  邮箱：{{message.mail}}</span>
+      <el-col :span="18">
+        <div style="min-height: 170px">{{instruction}}</div>
+        <el-row>
+          <el-col :span="8">
+            <div style="text-align: left">
+              <span>浏览量：{{message.watch}}</span>
+            </div>
+          </el-col>
+          <el-col :span="8">
+            <div style="text-align: left">
+              <span>点赞数：{{message.love}}</span>
+            </div>
+          </el-col>
+          <el-col :span="8">
+            <div style="text-align: left">
+              <span>邮箱：{{message.mail}}</span>
+            </div>
+          </el-col>
+        </el-row>
       </el-col>
     </el-row>
   </el-card>
@@ -56,10 +70,9 @@ import UserIcon from './UserIcon'
 export default {
   name: 'UserMessage',
   components: {UserIcon},
-  props: ['small'],
+  props: ['small', 'userId'],
   data () {
     return {
-      userId: 4,
       message: this.$store.state.userMessage,
       instruction: ''
     }
@@ -67,7 +80,7 @@ export default {
   methods: {},
   created () {
     this.$axios
-      .request('/UserMessage/base/' + this.userId)
+      .request('/UserMessage/base/' + this.$props.userId)
       .then(successResponse => {
         if (successResponse.data.code === 200) {
           this.$store.commit({
@@ -77,7 +90,7 @@ export default {
         }
       })
     this.$axios
-      .request('/UserMessage/instruction/' + this.userId)
+      .request('/UserMessage/instruction/' + this.$props.userId)
       .then(successResponse => {
         if (successResponse.data.code === 200) {
           this.instruction = successResponse.data.result

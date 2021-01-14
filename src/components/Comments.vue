@@ -11,15 +11,15 @@ import Comment from './Comment'
 export default {
   name: 'Comments',
   components: {Comment},
+  props: ['paperId'],
   data () {
     return {
-      paperId: 2,
       comments: this.$store.state.comments.comments
     }
   },
   created () {
     this.$axios
-      .request('/paper/comment/' + this.paperId)
+      .request('/paper/comment/' + this.$props.paperId)
       .then(successResponse => {
         if (successResponse.data.code === 200) {
           this.$store.commit({

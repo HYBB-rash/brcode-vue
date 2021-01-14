@@ -8,6 +8,7 @@ import UserMessage from '../components/UserMessage'
 import Paper from '../components/Paper'
 import Comments from '../components/Comments'
 import PaperPage from '../components/Home/PaperPage'
+import UserHome from '../components/Home/UserHome'
 
 Vue.use(Router)
 
@@ -58,6 +59,11 @@ export default new Router({
       path: '/page',
       name: 'Page',
       component: PaperPage
+    },
+    {
+      path: '/userHome',
+      name: 'UserHome',
+      component: UserHome
     }
   ]
 })
