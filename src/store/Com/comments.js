@@ -9,7 +9,8 @@ export default {
         content: null,
         time: null
       }
-    ]
+    ],
+    Re: null
   },
   mutations: {
     refreshComments (state, playLoad) {
@@ -18,6 +19,15 @@ export default {
       }
       for (let i = 0; i < playLoad.comments.length; i++) {
         state.comments.push(playLoad.comments[i])
+      }
+    },
+    getContentAndUserId (state, playLoad) {
+      let commentId = playLoad.commentId
+      for (let i = 0; i < state.comments.length; i++) {
+        if (commentId === state.comments[i].id) {
+          state.Re = state.comments[i]
+          return
+        }
       }
     }
   }

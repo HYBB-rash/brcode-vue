@@ -4,6 +4,7 @@ import loginStore from './Com/login'
 import paperListStore from './Com/paperList'
 import userMessageStore from './Com/userMessage'
 import paperStore from './Com/paper'
+import commentsStore from './Com/comments'
 
 Vue.use(Vuex)
 export default new Vuex.Store({
@@ -11,6 +12,7 @@ export default new Vuex.Store({
     login: loginStore,
     paperList: paperListStore,
     userMessage: userMessageStore,
-    paper: paperStore
+    paper: paperStore,
+    comments: commentsStore
   }
 })
