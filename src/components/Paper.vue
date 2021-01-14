@@ -15,12 +15,12 @@
 import VueMarkdown from 'vue-markdown'
 export default {
   name: 'Paper',
+  props: ['paperId'],
   components: {
     VueMarkdown
   },
   data () {
     return {
-      paperId: 7,
       paper: this.$store.state.paper,
       ip: null
     }
@@ -30,7 +30,7 @@ export default {
   created () {
     this.ip = localStorage.getItem('Ip')
     this.$axios
-      .post('/paper/' + this.paperId, {
+      .post('/paper/' + this.$props.paperId, {
         ip: this.ip
       })
       .then(successResponse => {

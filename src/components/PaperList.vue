@@ -1,28 +1,36 @@
 <template>
   <el-card>
     <div slot="header" class="clearfix">
-      <span>{{header[status]}}</span>
-      <el-button type="primary"
-                 @click="useTime"
-                 class="left-font" round plain>最新发布</el-button>
-      <el-button type="success"
-                 @click="useWatch"
-                 class="left-font" round plain>最多浏览</el-button>
-      <el-button type="info"
-                 @click="useLove"
-                 class="left-font" round plain>最多关注</el-button>
+      <el-row>
+        <el-col :span="6"><b>{{header[status]}}</b></el-col>
+        <el-col :span="6">
+          <el-button type="primary"
+                     @click="useTime"
+                     class="left-font" round plain>最新</el-button>
+        </el-col>
+        <el-col :span="6">
+          <el-button type="success"
+                     @click="useWatch"
+                     class="left-font" round plain>最热</el-button>
+        </el-col>
+        <el-col :span="6">
+          <el-button type="info"
+                     @click="useLove"
+                     class="left-font" round plain>高赞</el-button>
+        </el-col>
+      </el-row>
     </div>
     <el-card v-for="paper in paperList"
              :key="paper.id"
-             style="margin: 1%">
+             style="margin-top: 3%">
       <div slot="header" class="clearfix">
-        <span>{{paper.title}}</span>
-        <span class="left-font">作者：{{paper.username}}</span>
+        <b class="text">{{paper.title}}</b>
+        <span class="left-font text">作者：{{paper.username}}</span>
       </div>
       <div slot="default" class="clearfix">
         <span class="left-font text item">点赞：{{paper.love}}</span>
         <span class="left-font text item">浏览：{{paper.watch}}</span>
-        <span class="left-font text item">最后修改时间：{{paper.time}}</span>
+<!--        <span class="left-font text item">最后修改时间：{{paper.time}}</span>-->
       </div>
     </el-card>
     <div style="text-align: center">

@@ -7,6 +7,7 @@ import PaperList from '../components/PaperList'
 import UserMessage from '../components/UserMessage'
 import Paper from '../components/Paper'
 import Comments from '../components/Comments'
+import PaperPage from '../components/Home/PaperPage'
 
 Vue.use(Router)
 
@@ -52,6 +53,11 @@ export default new Router({
       path: '/comments',
       name: 'Comments',
       component: Comments
+    },
+    {
+      path: '/page',
+      name: 'Page',
+      component: PaperPage
     }
   ]
 })

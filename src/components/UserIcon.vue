@@ -1,11 +1,11 @@
 <template>
-  <el-avatar :src="icon"></el-avatar>
+  <el-avatar :src="icon" :size="size"></el-avatar>
 </template>
 
 <script>
 export default {
   name: 'UserIcon',
-  props: ['userId'],
+  props: ['userId', 'size'],
   data () {
     return {
       icon: 'http://localhost:8433/img/1.jpg'
