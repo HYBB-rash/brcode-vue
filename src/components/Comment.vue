@@ -7,7 +7,7 @@
     </el-row>
     <el-row v-if="comment.status">
       <el-col :span="2">
-        <el-avatar :src="icon"></el-avatar>
+        <user-icon v-bind:user-id="comment.userId"></user-icon>
       </el-col>
       <el-col :span="18">
         <el-row>{{username}}</el-row>
@@ -22,10 +22,11 @@
 
 <script>
 import Re from './Re'
+import UserIcon from './UserIcon'
 export default {
   name: 'Comment',
   props: ['comment'],
-  components: {Re},
+  components: {Re, UserIcon},
   data () {
     return {
       icon: 'http://localhost:8433/',
@@ -34,13 +35,6 @@ export default {
     }
   },
   created () {
-    this.$axios
-      .request('/UserMessage/icon/' + this.$props.comment.userId)
-      .then(successResponse => {
-        if (successResponse.data.code === 200) {
-          this.icon += successResponse.data.result
-        }
-      })
     this.$axios
       .request('/UserMessage/username/' + this.$props.comment.userId)
       .then(successResponse => {

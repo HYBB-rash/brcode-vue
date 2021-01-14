@@ -3,7 +3,9 @@
 <!--    <span>{{message.id}}</span>-->
     <el-row>
       <el-col :span="4">
-        <div style="text-align: center"><el-avatar :src="icon"></el-avatar></div>
+        <div style="text-align: center">
+          <user-icon v-bind:userId="userId"></user-icon>
+        </div>
         <div style="text-align: center">{{message.username}}</div>
       </el-col>
       <el-col :span="20">
@@ -17,8 +19,10 @@
 </template>
 
 <script>
+import UserIcon from './UserIcon'
 export default {
   name: 'UserMessage',
+  components: {UserIcon},
   data () {
     return {
       userId: 4,
