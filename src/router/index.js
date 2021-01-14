@@ -10,7 +10,8 @@ import Comments from '../components/Comments'
 import PaperPage from '../components/Home/PaperPage'
 import UserHome from '../components/Home/UserHome'
 import EditPage from '../components/Home/EditPage'
-
+import UserList from '../components/UserList'
+import Index from '../components/Home/Index'
 Vue.use(Router)
 
 export default new Router({
@@ -22,6 +23,28 @@ export default new Router({
     //   component: HelloWorld
     // }
     {
+      path: '/',
+      name: 'Index',
+      component: Index,
+      children: [
+        {
+          path: '/index',
+          name: 'Home',
+          component: Home
+        },
+        {
+          path: '/page',
+          name: 'Page',
+          component: PaperPage
+        },
+        {
+          path: '/editPage',
+          name: 'EditPage',
+          component: EditPage
+        }
+      ]
+    },
+    {
       path: '/login',
       name: 'Login',
       component: Login
@@ -30,11 +53,6 @@ export default new Router({
       path: '/regis',
       name: 'Regis',
       component: Regis
-    },
-    {
-      path: '/index',
-      name: 'Home',
-      component: Home
     },
     {
       path: '/paperList',
@@ -57,19 +75,14 @@ export default new Router({
       component: Comments
     },
     {
-      path: '/page',
-      name: 'Page',
-      component: PaperPage
-    },
-    {
       path: '/userHome',
       name: 'UserHome',
       component: UserHome
     },
     {
-      path: '/editPage',
-      name: 'EditPage',
-      component: EditPage
+      path: '/userList',
+      name: 'UserList',
+      component: UserList
     }
   ]
 })

@@ -5,7 +5,7 @@
       <PaperList class="card" user-id="2"></PaperList>
     </el-aside>
     <el-main style="margin-right: 3%">
-      <Paper class="card" v-bind:paper-id="2"></Paper>
+      <Paper v-bind:paper-id="2"></Paper>
       <Comments paper-id="2" class="card"></Comments>
     </el-main>
   </el-container>

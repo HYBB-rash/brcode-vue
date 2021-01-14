@@ -1,7 +1,7 @@
 <template>
   <el-container>
     <el-main>
-      <el-card style="margin: 5%">
+      <el-card style="margin: 2%">
         <div slot="header">
           <h2>编辑</h2>
         </div>

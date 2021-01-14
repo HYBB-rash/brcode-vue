@@ -29,7 +29,7 @@
         </el-col>
       </el-row>
     </div>
-    <div style="min-height: 400px">
+    <div style="min-height: 450px">
       <el-card v-for="paper in paperList"
                :key="paper.id"
                style="margin-top: 3%">
@@ -75,7 +75,7 @@ export default {
   methods: {
     genUrl (type) {
       let request
-      if (this.userId === -1) {
+      if (Number(this.userId) === -1) {
         request = this.url + this.para[type] + '?' + 'index=' + this.index + '&' + 'size=' + this.size
       } else {
         request = this.url + '/' + this.$props.userId + this.para[type] + '?' + 'index=' + this.index + '&' + 'size=' + this.size
@@ -131,7 +131,7 @@ export default {
   },
   created () {
     let countUrl = '/Page/count'
-    if (this.userId === -1) countUrl = '/Page/count'
+    if (Number(this.userId) === -1) countUrl = '/Page/count'
     else countUrl = '/Page/count/' + this.$props.userId
     console.log(countUrl)
     this.$axios
