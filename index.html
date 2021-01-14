@@ -5,6 +5,18 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>brcode</title>
   </head>
+  <script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
+  <script type="text/javascript">
+
+    const Ip = returnCitySN['cip']
+
+    const cityName = returnCitySN['cname']
+
+    localStorage.setItem('Ip', Ip)
+
+    localStorage.setItem('cityname', cityName)
+
+  </script>
   <body style="margin: 0; background: #f7f7f7">
     <div id="app"></div>
     <!-- built files will be auto injected -->

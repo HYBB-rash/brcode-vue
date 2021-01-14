@@ -6,6 +6,14 @@ import router from './router'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import store from './store'
+import 'github-markdown-css/github-markdown.css'
+import hljs from 'highlight.js'
+Vue.directive('highlight', function (el) {
+  const blocks = el.querySelectorAll('pre code')
+  blocks.forEach(block => {
+    hljs.highlightBlock(block)
+  })
+})
 
 Vue.config.productionTip = false
 
