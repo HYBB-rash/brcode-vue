@@ -11,9 +11,12 @@
         </div>
       </el-row>
       <el-row style="min-height: 15%">
-        <h3 style="text-align: center">
-          {{message.username}}
-        </h3>
+        <Username v-bind:user-id="message.id"
+                  v-bind:big="true"
+                  v-bind:username="message.username"></Username>
+<!--        <h3 style="text-align: center">-->
+<!--          {{message.username}}-->
+<!--        </h3>-->
       </el-row>
       <el-row style="min-height: 25px">
         <el-col :span="12">
@@ -39,7 +42,10 @@
         <div style="text-align: center">
           <user-icon v-bind:size="150" v-bind:userId="userId"></user-icon>
         </div>
-        <h3 style="text-align: center">{{message.username}}</h3>
+        <Username v-bind:user-id="message.id"
+                  v-bind:big="true"
+                  v-bind:username="message.username"></Username>
+<!--        <h3 style="text-align: center">{{message.username}}</h3>-->
       </el-col>
       <el-col :span="18">
         <div style="min-height: 170px">{{instruction}}</div>
@@ -66,10 +72,11 @@
 </template>
 
 <script>
+import Username from './Username'
 import UserIcon from './UserIcon'
 export default {
   name: 'UserMessage',
-  components: {UserIcon},
+  components: {UserIcon, Username},
   props: ['small', 'userId'],
   data () {
     return {

@@ -23,8 +23,8 @@ export default {
   data () {
     return {
       navList: [
-        {name: '/login', navItem: '我的博客'},
-        {name: '/index', navItem: '后台管理'},
+        {name: '/index', navItem: '博客首页'},
+        {name: '/userHome/' + this.$store.state.login.id, navItem: '我的主页'},
         {name: '/profile', navItem: '写文章'}
       ]
     }
