@@ -33,7 +33,7 @@ export default new Router({
           component: Home
         },
         {
-          path: '/page',
+          path: '/page/:userId/:paperId',
           name: 'Page',
           component: PaperPage
         },

@@ -1,12 +1,14 @@
 <template>
   <el-container>
     <el-aside style="margin-left: 3%;" width="23%">
-      <UserMessage user-id="2" v-bind:small="true" class="card"></UserMessage>
-      <PaperList class="card" user-id="2"></PaperList>
+      <UserMessage v-bind:user-id="userId"
+                   v-bind:small="true" class="card"></UserMessage>
+      <PaperList class="card"
+                 v-bind:user-id="userId"></PaperList>
     </el-aside>
     <el-main style="margin-right: 3%">
-      <Paper v-bind:paper-id="2"></Paper>
-      <Comments paper-id="2" class="card"></Comments>
+      <Paper v-bind:paper-id="paperId"></Paper>
+      <Comments v-bind:paper-id="paperId" class="card"></Comments>
     </el-main>
   </el-container>
 </template>
@@ -18,7 +20,19 @@ import Paper from '../Paper'
 import Comments from '../Comments'
 export default {
   name: 'PaperPage',
-  components: {UserMessage, PaperList, Paper, Comments}
+  components: {UserMessage, PaperList, Paper, Comments},
+  data () {
+    return {
+      userId: this.$route.params.userId,
+      paperId: this.$route.params.paperId
+    }
+  },
+  watch: {
+    '$route' (to, from) {
+      this.paperId = to.paperId
+      this.userId = to.userId
+    }
+  }
 }
 </script>
 

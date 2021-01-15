@@ -34,7 +34,8 @@
                :key="paper.id"
                style="margin-top: 3%">
         <div slot="header" class="clearfix">
-          <b class="text">{{paper.title}}</b>
+          <paper-title v-bind:title="paper.title"
+                       v-bind:paper-id="paper.id"></paper-title>
           <span class="left-font text">作者：{{paper.username}}</span>
         </div>
         <div slot="default" class="clearfix">
@@ -56,9 +57,11 @@
 </template>
 
 <script>
+import PaperTitle from './PaperTitle'
 export default {
   name: 'PaperList',
   props: ['userId'],
+  components: {PaperTitle},
   data () {
     return {
       paperList: this.$store.state.paperList.paperList,
