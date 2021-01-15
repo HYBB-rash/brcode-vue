@@ -7,17 +7,21 @@
       <div class="markdown-body">
         <VueMarkdown :source="paper.content" v-highlight></VueMarkdown>
       </div>
+      <div>
+        <love v-bind:paper-id="paperId"></love>
+      </div>
     </el-card>
   </div>
 </template>
 
 <script>
 import VueMarkdown from 'vue-markdown'
+import Love from './Love'
 export default {
   name: 'Paper',
   props: ['paperId'],
   components: {
-    VueMarkdown
+    VueMarkdown, Love
   },
   data () {
     return {
