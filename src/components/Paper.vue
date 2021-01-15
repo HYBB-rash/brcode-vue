@@ -38,7 +38,7 @@ export default {
         ip: this.ip
       })
       .then(successResponse => {
-        console.log(successResponse.data.result)
+        // console.log(successResponse.data.result)
         if (successResponse.data.code === 200) {
           this.$store.commit({
             type: 'refreshPaper',

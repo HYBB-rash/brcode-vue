@@ -18,7 +18,8 @@ export default {
       this.$router.replace({path: '/page/' + userId + '/' + paperId})
     }
   },
-  created () {
+  beforeMount () {
+    // console.log(this.$props.title + 'this flag')
     this.$axios
       .request('/UserMessage/' + this.$props.paperId)
       .then(successResponse => {

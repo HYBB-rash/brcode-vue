@@ -2,14 +2,14 @@ export default {
   state: {
     paperList:
       [
-        {
-          id: null,
-          title: null,
-          username: null,
-          love: null,
-          watch: null,
-          time: null
-        }
+        // {
+        //   id: null,
+        //   title: null,
+        //   username: null,
+        //   love: null,
+        //   watch: null,
+        //   time: null
+        // }
       ]
   },
   mutations: {

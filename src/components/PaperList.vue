@@ -139,6 +139,7 @@ export default {
           })
         }
       })
+    console.log(this.$store.state.paperList)
     let countUrl = '/Page/count'
     if (Number(this.userId) === -1) countUrl = '/Page/count'
     else countUrl = '/Page/count/' + this.$props.userId

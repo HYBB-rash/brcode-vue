@@ -1,7 +1,7 @@
 <template>
   <el-card>
     <el-row>
-      <el-col :span="6">回复{{username}}:</el-col>
+      <el-col :span="6">回复{{comment.username}}:</el-col>
       <el-col :span="18">{{comment.content}}</el-col>
     </el-row>
   </el-card>
@@ -17,13 +17,6 @@ export default {
     }
   },
   created () {
-    this.$axios
-      .request('/UserMessage/username/' + this.$props.comment.userId)
-      .then(successResponse => {
-        if (successResponse.data.code === 200) {
-          this.username = successResponse.data.result
-        }
-      })
   }
 }
 </script>

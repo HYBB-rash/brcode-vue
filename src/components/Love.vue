@@ -25,6 +25,11 @@ export default {
   },
   methods: {
     loveThis (paperId) {
+      if (this.userId === null) {
+        this.$message.error('请先登录！')
+        this.$router.replace({path: '/login'})
+        return
+      }
       this.$axios
         .request('/paper/love/like/' + paperId + '/' + this.userId)
         .then(successResponse => {
