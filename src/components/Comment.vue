@@ -41,6 +41,8 @@
 <script>
 import Re from './Re'
 import UserIcon from './UserIcon'
+import { saveReply, getUsernameByUserId, getReplyBaseByCommentId } from '../api/api'
+
 export default {
   name: 'Comment',
   props: ['comment', 'paperId'],
@@ -67,10 +69,9 @@ export default {
         this.$message.error('请先输入评论')
         return
       }
-      this.$axios
-        .post('/reply/save', this.reply)
-        .then(successResponse => {
-          if (successResponse.data.code === 200) {
+      saveReply(this.reply)
+        .then(res => {
+          if (res.code === 200) {
             this.$message.success('评论成功')
             this.reply.content = null
           }
@@ -78,26 +79,13 @@ export default {
     }
   },
   created () {
-    console.log('/UserMessage/username/' + this.$props.comment.userId)
-    this.$axios
-      .request('/UserMessage/username/' + this.$props.comment.userId)
-      .then(successResponse => {
-        if (successResponse.data.code === 200) {
-          this.username = successResponse.data.result
-        }
+    getUsernameByUserId({}, this.$props.comment.userId)
+      .then(res => {
+        this.username = res.result
       })
-    // console.log('/comment/reply/' + this.$props.comment.commentId)
-    // if (this.$props.comment.commentId !== null) {
-    //   this.$store.commit({
-    //     type: 'getContentAndUserId',
-    //     commentId: this.$props.comment.commentId
-    //   })
-    this.$axios
-      .request('/comment/reply/' + this.$props.comment.commentId)
-      .then(successResponse => {
-        if (successResponse.data.code === 200) {
-          this.Re = successResponse.data.result
-        }
+    getReplyBaseByCommentId({}, this.$props.comment.commentId)
+      .then(res => {
+        this.Re = res.result
       })
   }
 }

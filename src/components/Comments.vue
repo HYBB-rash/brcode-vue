@@ -28,6 +28,8 @@
 
 <script>
 import Comment from './Comment'
+import { saveComment, getComments } from '../api/api'
+
 export default {
   name: 'Comments',
   components: {Comment},
@@ -48,19 +50,17 @@ export default {
         this.$message.error('请先输入评论')
         return
       }
-      this.$axios
-        .post('/comment/save', this.comment)
-        .then(successResponse => {
-          if (successResponse.data.code === 200) {
+      saveComment(this.comment)
+        .then(res => {
+          if (res.code === 200) {
             this.$message.success('评论成功')
             this.comment.content = null
-            this.$axios
-              .request('/paper/comment/' + this.$props.paperId)
-              .then(successResponse => {
-                if (successResponse.data.code === 200) {
+            getComments({}, this.$props.paperId)
+              .then(res => {
+                if (res.code === 200) {
                   this.$store.commit({
                     type: 'refreshComments',
-                    comments: successResponse.data.result
+                    comments: res.result
                   })
                 }
               })
@@ -69,13 +69,12 @@ export default {
     }
   },
   created () {
-    this.$axios
-      .request('/paper/comment/' + this.$props.paperId)
-      .then(successResponse => {
-        if (successResponse.data.code === 200) {
+    getComments({}, this.$props.paperId)
+      .then(res => {
+        if (res.code === 200) {
           this.$store.commit({
             type: 'refreshComments',
-            comments: successResponse.data.result
+            comments: res.result
           })
         }
       })

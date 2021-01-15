@@ -74,6 +74,8 @@
 <script>
 import Username from './Username'
 import UserIcon from './UserIcon'
+import { getUserMessage, getUserInstruction } from '../api/api'
+
 export default {
   name: 'UserMessage',
   components: {UserIcon, Username},
@@ -86,21 +88,19 @@ export default {
   },
   methods: {},
   created () {
-    this.$axios
-      .request('/UserMessage/base/' + this.$props.userId)
-      .then(successResponse => {
-        if (successResponse.data.code === 200) {
+    getUserMessage({}, this.$props.userId)
+      .then(res => {
+        if (res.code === 200) {
           this.$store.commit({
             type: 'refreshUserMessage',
-            message: successResponse.data.result
+            message: res.result
           })
         }
       })
-    this.$axios
-      .request('/UserMessage/instruction/' + this.$props.userId)
-      .then(successResponse => {
-        if (successResponse.data.code === 200) {
-          this.instruction = successResponse.data.result
+    getUserInstruction({}, this.$props.userId)
+      .then(res => {
+        if (res.code === 200) {
+          this.instruction = res.result
         }
       })
   }

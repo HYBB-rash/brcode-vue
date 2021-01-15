@@ -3,6 +3,8 @@
 </template>
 
 <script>
+import { getIcon } from '../api/api'
+
 export default {
   name: 'UserIcon',
   props: ['userId', 'size'],
@@ -12,11 +14,10 @@ export default {
     }
   },
   created () {
-    this.$axios
-      .request('/UserMessage/icon/' + this.$props.userId)
-      .then(successResponse => {
-        if (successResponse.data.code === 200) {
-          this.icon = 'http://localhost:8433/' + successResponse.data.result
+    getIcon({}, this.$props.userId)
+      .then(res => {
+        if (res.code === 200) {
+          this.icon = 'http://localhost:8433/' + res.result
         }
       })
   }

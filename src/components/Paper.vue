@@ -17,6 +17,8 @@
 <script>
 import VueMarkdown from 'vue-markdown'
 import Love from './Love'
+import { getPaper } from '../api/api'
+
 export default {
   name: 'Paper',
   props: ['paperId'],
@@ -33,16 +35,12 @@ export default {
   },
   created () {
     this.ip = localStorage.getItem('Ip')
-    this.$axios
-      .post('/paper/' + this.$props.paperId, {
-        ip: this.ip
-      })
-      .then(successResponse => {
-        // console.log(successResponse.data.result)
-        if (successResponse.data.code === 200) {
+    getPaper({ip: this.ip}, this.$props.paperId)
+      .then(res => {
+        if (res.code === 200) {
           this.$store.commit({
             type: 'refreshPaper',
-            paper: successResponse.data.result
+            paper: res.result
           })
         }
       })

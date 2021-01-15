@@ -13,6 +13,8 @@
 </template>
 
 <script>
+import { lovePaper, haveLove, loveCount } from '../api/api'
+
 export default {
   name: 'Love',
   props: ['paperId'],
@@ -30,11 +32,10 @@ export default {
         this.$router.replace({path: '/login'})
         return
       }
-      this.$axios
-        .request('/paper/love/like/' + paperId + '/' + this.userId)
-        .then(successResponse => {
-          if (successResponse.data.code === 200) {
-            if (successResponse.data.result) {
+      lovePaper({}, paperId, this.userId)
+        .then(res => {
+          if (res.code === 200) {
+            if (res.result) {
               this.$message.success('点赞成功')
               this.haveLove = true
               this.love += 1
@@ -46,18 +47,16 @@ export default {
     }
   },
   created () {
-    this.$axios
-      .request('/paper/love/' + this.$props.paperId + '/' + this.userId)
-      .then(successResponse => {
-        if (successResponse.data.code === 200) {
-          this.haveLove = successResponse.data.result
+    haveLove({}, this.$props.paperId, this.userId)
+      .then(res => {
+        if (res.code === 200) {
+          this.haveLove = res.result
         }
       })
-    this.$axios
-      .request('/paper/love/' + this.$props.paperId)
-      .then(successResponse => {
-        if (successResponse.data.code === 200) {
-          this.love = successResponse.data.result
+    loveCount({}, this.$props.paperId)
+      .then(res => {
+        if (res.code === 200) {
+          this.love = res.result
         }
       })
   }
