@@ -30,7 +30,7 @@ export default {
   name: 'EditPage',
   data () {
     return {
-      userId: 2,
+      userId: this.$store.state.login.id,
       title: this.$store.state.editPaper.title,
       content: this.$store.state.editPaper.content
     }
@@ -42,6 +42,7 @@ export default {
         .then(successResponse => {
           if (successResponse.data.code === 200) {
             this.$message.success('保存成功')
+            this.$router.replace({path: '/index'})
           }
         })
     },
@@ -54,6 +55,7 @@ export default {
         .then(successResponse => {
           if (successResponse.data.code === 200) {
             this.$message.success('保存成功')
+            this.$router.replace({path: '/index'})
           }
         })
     }

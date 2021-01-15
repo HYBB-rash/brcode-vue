@@ -25,7 +25,7 @@ export default {
       navList: [
         {name: '/index', navItem: '博客首页'},
         {name: '/userHome/' + this.$store.state.login.id, navItem: '我的主页'},
-        {name: '/profile', navItem: '写文章'}
+        {name: '/editPage', navItem: '写文章'}
       ]
     }
   },
