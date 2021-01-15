@@ -32,7 +32,8 @@
                :key="user.id"
                style="margin-top: 3%">
         <div slot="header" class="clearfix">
-          <b class="text">{{user.username}}</b>
+          <username v-bind:username="user.username"
+                    v-bind:user-id="user.id"></username>
         </div>
         <div slot="default" class="clearfix">
           <span class="left-font text item">点赞:{{user.love}}</span>
@@ -52,8 +53,10 @@
 </template>
 
 <script>
+import Username from './Username'
 export default {
   name: 'UserList',
+  components: {Username},
   data () {
     return {
       userList: this.$store.state.userList.userList,

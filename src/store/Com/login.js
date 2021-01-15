@@ -8,6 +8,11 @@ export default {
       state.id = playLoad.userId
       state.username = playLoad.username
       window.localStorage.setItem('login', JSON.stringify(state))
+    },
+    logout (state) {
+      state.id = null
+      state.username = null
+      window.localStorage.removeItem('login')
     }
   }
 }

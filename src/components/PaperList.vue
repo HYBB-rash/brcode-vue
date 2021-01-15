@@ -75,7 +75,7 @@ export default {
   methods: {
     genUrl (type) {
       let request
-      if (Number(this.userId) === -1) {
+      if (Number(this.$props.userId) === -1) {
         request = this.url + this.para[type] + '?' + 'index=' + this.index + '&' + 'size=' + this.size
       } else {
         request = this.url + '/' + this.$props.userId + this.para[type] + '?' + 'index=' + this.index + '&' + 'size=' + this.size
@@ -117,10 +117,18 @@ export default {
     }
   },
   beforeCreate () {
+  },
+  created () {
+    let url
+    if (Number(this.$props.userId) === -1) {
+      url = '/PaperList/time?index=0&size=3'
+    } else {
+      url = '/PaperList/' + this.$props.userId + '/time?index=0&size=3'
+    }
     this.$axios
-      .request('/PaperList/time?index=0&size=3')
+      .request(url)
       .then(successResponse => {
-        console.log(successResponse.data.result)
+        console.log(successResponse)
         if (successResponse.data.code === 200) {
           this.$store.commit({
             type: 'refreshPaperItems',
@@ -128,8 +136,6 @@ export default {
           })
         }
       })
-  },
-  created () {
     let countUrl = '/Page/count'
     if (Number(this.userId) === -1) countUrl = '/Page/count'
     else countUrl = '/Page/count/' + this.$props.userId

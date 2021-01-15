@@ -41,6 +41,11 @@ export default new Router({
           path: '/editPage',
           name: 'EditPage',
           component: EditPage
+        },
+        {
+          path: '/userHome/:userId',
+          name: 'UserHome',
+          component: UserHome
         }
       ]
     },
@@ -73,11 +78,6 @@ export default new Router({
       path: '/comments',
       name: 'Comments',
       component: Comments
-    },
-    {
-      path: '/userHome',
-      name: 'UserHome',
-      component: UserHome
     },
     {
       path: '/userList',

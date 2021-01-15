@@ -18,7 +18,7 @@ export default {
   components: {PaperList, UserMessage},
   data () {
     return {
-      userId: 2
+      userId: this.$route.params.userId
     }
   }
 }

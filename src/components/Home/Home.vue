@@ -18,7 +18,10 @@ import UserList from '../UserList'
 import PaperList from '../PaperList'
 export default {
   name: 'Home',
-  components: {UserList, PaperList}
+  components: {UserList, PaperList},
+  created () {
+    console.log(this.$store.state.login)
+  }
 }
 </script>
 

@@ -69,6 +69,7 @@ export default {
           password: this.loginForm.password
         })
         .then(successResponse => {
+          console.log(successResponse.data.result)
           if (successResponse.data.code === 200) {
             _this.$store.commit({
               type: 'storeLoginMessage',
