@@ -48,7 +48,7 @@
             label="操作">
             <template slot-scope="scope">
               <el-button type="text" size="small" @click="editPaper(scope.row.id)" >编辑文章</el-button>
-              <el-button type="text" size="small" >删除文章</el-button>
+              <el-button type="text" size="small" @click="deletePaper(scope.row.id)" >删除文章</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import { getUserPaperListSortByTime, getPaperCountByUserId, getPaperEdit } from '../../api/api'
+import { getUserPaperListSortByTime, getPaperCountByUserId, getPaperEdit, deletePaper } from '../../api/api'
 
 export default {
   name: 'UserAdminHome',
@@ -114,6 +114,17 @@ export default {
             this.$router.replace('/editPage')
           }
         })
+    },
+    deletePaper (paperId) {
+      deletePaper({}, paperId)
+        .then(res => {
+          if (res.result) this.$message.success('删除成功')
+          else this.$message.error('删除失败')
+        })
+      getPaperCountByUserId({}, this.userId)
+        .then(res => { this.total = res.result })
+      getUserPaperListSortByTime({}, 0, 10, this.userId)
+        .then(res => { this.refreshPaperList(res) })
     }
   },
   created () {

@@ -70,3 +70,5 @@ export const getUserListSortByWatch = (data, index, size) =>
   get('/UserList/watch?index=' + index + '&size=' + size, data)
 
 export const getPaperEdit = (data) => post('/GetPaperContent', data)
+
+export const deletePaper = (data, paperId) => get('/Delete/paper/' + paperId)
