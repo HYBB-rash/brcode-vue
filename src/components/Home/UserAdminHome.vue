@@ -24,33 +24,7 @@
     <el-main>
       <paper-table v-if="Number(show) === 0"></paper-table>
       <comment-table v-else-if="Number(show) === 1"></comment-table>
-<!--      <el-card v-else-if="Number(show) === 1" class="choices" style="width: 70%">-->
-<!--        <div slot="header">-->
-<!--          <b>评论管理</b>-->
-<!--        </div>-->
-<!--        <el-table :data="commentList"-->
-<!--                  border>-->
-<!--          <el-table-column-->
-<!--            prop="status"-->
-<!--            width="80px"-->
-<!--            label="状态"></el-table-column>-->
-<!--          <el-table-column-->
-<!--            prop="content"-->
-<!--            width="160px"-->
-<!--            label="内容"></el-table-column>-->
-<!--          <el-table-column-->
-<!--            prop="time"-->
-<!--            label="最后修改时间"></el-table-column>-->
-<!--          <el-table-column-->
-<!--            prop="id"-->
-<!--            width="320px"-->
-<!--            label="操作">-->
-<!--            <template slot-scope="scope">-->
-<!--              <el-button type="text" @click="scope.row.id" size="small">删除评论</el-button>-->
-<!--            </template>-->
-<!--          </el-table-column>-->
-<!--        </el-table>-->
-<!--      </el-card>-->
+      <edit-user-message v-else-if="Number(show) === 2"></edit-user-message>
     </el-main>
   </el-container>
 </template>
@@ -59,14 +33,13 @@
 import Username from '../Username'
 import PaperTable from '../PaperTable'
 import CommentTable from '../CommentTable'
+import EditUserMessage from '../EditUserMessage'
 
 export default {
   name: 'UserAdminHome',
-  components: {CommentTable, PaperTable, Username},
+  components: {EditUserMessage, CommentTable, PaperTable, Username},
   data () {
     return {
-      paperList: this.$store.state.paperList.paperList,
-      commentList: this.$store.state.comments.comments,
       userId: this.$store.state.login.id,
       index: 0,
       size: 6,

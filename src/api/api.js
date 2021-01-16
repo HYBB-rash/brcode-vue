@@ -81,3 +81,9 @@ export const getCommentCount = (data, userId) =>
 
 export const deleteCommentByCommentId = (data, commentId) =>
   get('/comment/delete/' + commentId, data)
+
+export const saveUserMessage = (data) =>
+  post('/UserMessage/save', data)
+
+export const findUserMessage = (data, userId) =>
+  get('/UserMessage/edit/' + userId, data)

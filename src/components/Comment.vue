@@ -12,7 +12,7 @@
       <el-col :span="18">
         <el-row>{{username}}</el-row>
         <el-row style="margin-top: 5%">
-          <el-col :span="22">{{comment.content}}</el-col>
+          <el-col v-if="comment.status === 1" :span="22">{{comment.content}}</el-col>
           <el-col :span="2">
             <el-button type="text" @click="replyInput">回复</el-button>
           </el-col>
