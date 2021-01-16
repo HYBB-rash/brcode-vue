@@ -12,6 +12,7 @@ import UserHome from '../components/Home/UserHome'
 import EditPage from '../components/Home/EditPage'
 import UserList from '../components/UserList'
 import Index from '../components/Home/Index'
+import UserAdminHome from '../components/Home/UserAdminHome'
 Vue.use(Router)
 
 export default new Router({
@@ -46,6 +47,11 @@ export default new Router({
           path: '/userHome/:userId',
           name: 'UserHome',
           component: UserHome
+        },
+        {
+          path: '/userAdminHome/:userId',
+          name: UserAdminHome,
+          component: UserAdminHome
         }
       ]
     },

@@ -37,6 +37,8 @@ export default {
   },
   methods: {
     save () {
+      this.$store.state.editPaper.content = this.content
+      this.$store.state.editPaper.title = this.title
       this.$axios
         .post('/SavePaperContent/' + this.userId, this.$store.state.editPaper)
         .then(successResponse => {
@@ -49,7 +51,6 @@ export default {
     saveAndSend () {
       this.$store.state.editPaper.content = this.content
       this.$store.state.editPaper.title = this.title
-      console.log(this.$store.state.editPaper)
       this.$axios
         .post('/SavePaperContentAndSend/' + this.userId, this.$store.state.editPaper)
         .then(successResponse => {

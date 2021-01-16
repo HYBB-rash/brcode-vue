@@ -49,7 +49,7 @@ export const getPaperListSortByLove = (data, index, size) =>
   get('/PaperList/love?index=' + index + '&size=' + size, data)
 
 export const getUserPaperListSortByTime = (data, index, size, userId) =>
-  get('/PaperList/' + userId + '/time?index=' + index + '&size' + size, data)
+  get('/PaperList/' + userId + '/time?index=' + index + '&size=' + size, data)
 
 export const getUserPaperListSortByWatch = (data, index, size, userId) =>
   get('/PaperList/' + userId + '/watch?index=' + index + '&size=' + size, data)
@@ -68,3 +68,5 @@ export const getUserListSortByLove = (data, index, size) =>
 
 export const getUserListSortByWatch = (data, index, size) =>
   get('/UserList/watch?index=' + index + '&size=' + size, data)
+
+export const getPaperEdit = (data) => post('/GetPaperContent', data)
