@@ -58,6 +58,10 @@
 
 <script>
 import PaperTitle from './PaperTitle'
+import { getPaperListSortByLove, getPaperListSortByWatch, getPaperListSortByTime,
+  getUserPaperListSortByLove, getUserPaperListSortByTime, getUserPaperListSortByWatch,
+  getPaperCount, getPaperCountByUserId} from '../api/api'
+
 export default {
   name: 'PaperList',
   props: ['userId'],
@@ -76,82 +80,67 @@ export default {
     }
   },
   methods: {
-    genUrl (type) {
-      let request
-      if (Number(this.$props.userId) === -1) {
-        request = this.url + this.para[type] + '?' + 'index=' + this.index + '&' + 'size=' + this.size
-      } else {
-        request = this.url + '/' + this.$props.userId + this.para[type] + '?' + 'index=' + this.index + '&' + 'size=' + this.size
-      }
-      return request
-    },
-    refresh (request) {
-      this.$axios(request)
-        .then(successResponse => {
-          console.log(successResponse.data.result)
-          if (successResponse.data.code === 200) {
-            this.$store.commit({
-              type: 'refreshPaperItems',
-              list: successResponse.data.result
-            })
-          }
+    refreshPaperList (res) {
+      if (res.code === 200) {
+        this.$store.commit({
+          type: 'refreshPaperItems',
+          list: res.result
         })
+      }
     },
     useTime () {
-      let request = this.genUrl(0)
-      this.refresh(request)
+      if (Number(this.$props.userId) === -1) {
+        getPaperListSortByTime({}, this.index, this.size)
+          .then(res => { this.refreshPaperList(res) })
+      } else {
+        getUserPaperListSortByTime({}, this.index, this.size, this.$props.userId)
+          .then(res => { this.refreshPaperList(res) })
+      }
       this.status = 0
     },
     useLove () {
-      let request = this.genUrl(1)
-      this.refresh(request)
+      if (Number(this.$props.userId) === -1) {
+        getPaperListSortByLove({}, this.index, this.size)
+          .then(res => { this.refreshPaperList(res) })
+      } else {
+        getUserPaperListSortByLove({}, this.index, this.size, this.$props.userId)
+          .then(res => { this.refreshPaperList(res) })
+      }
       this.status = 1
     },
     useWatch () {
-      let request = this.genUrl(2)
-      this.refresh(request)
+      if (Number(this.$props.userId) === -1) {
+        getPaperListSortByWatch({}, this.index, this.size)
+          .then(res => { this.refreshPaperList(res) })
+      } else {
+        getUserPaperListSortByWatch({}, this.index, this.size, this.$props.userId)
+          .then(res => { this.refreshPaperList(res) })
+      }
       this.status = 2
     },
     changPage () {
-      console.log(this.currentPage)
       this.index = this.currentPage - 1
-      let genUrl = this.genUrl(this.status)
-      this.refresh(genUrl)
+      if (this.status === 0) {
+        this.useTime()
+      } else if (this.status === 1) {
+        this.useLove()
+      } else if (this.status === 2) {
+        this.useWatch()
+      }
     }
-  },
-  beforeCreate () {
   },
   created () {
-    let url
     if (Number(this.$props.userId) === -1) {
-      url = '/PaperList/time?index=0&size=3'
+      getPaperCount({})
+        .then(res => { this.total = res.result })
+      getPaperListSortByTime({}, 0, 3)
+        .then(res => { this.refreshPaperList(res) })
     } else {
-      url = '/PaperList/' + this.$props.userId + '/time?index=0&size=3'
+      getPaperCountByUserId({}, this.$props.userId)
+        .then(res => { this.total = res.result })
+      getUserPaperListSortByTime({}, 0, 3, this.$props.userId)
+        .then(res => { this.refreshPaperList(res) })
     }
-    this.$axios
-      .request(url)
-      .then(successResponse => {
-        console.log(successResponse)
-        if (successResponse.data.code === 200) {
-          this.$store.commit({
-            type: 'refreshPaperItems',
-            list: successResponse.data.result
-          })
-        }
-      })
-    console.log(this.$store.state.paperList)
-    let countUrl = '/Page/count'
-    if (Number(this.userId) === -1) countUrl = '/Page/count'
-    else countUrl = '/Page/count/' + this.$props.userId
-    console.log(countUrl)
-    this.$axios
-      .request(countUrl)
-      .then(successResponse => {
-        if (successResponse.data.code === 200) {
-          this.total = successResponse.data.result
-          console.log(this.total)
-        }
-      })
   }
 }
 </script>

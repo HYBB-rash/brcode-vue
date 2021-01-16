@@ -54,14 +54,14 @@
 
 <script>
 import Username from './Username'
+import { getUserListSortByLove, getUserListSortByWatch, getUserCount } from '../api/api'
+
 export default {
   name: 'UserList',
   components: {Username},
   data () {
     return {
       userList: this.$store.state.userList.userList,
-      para: ['/love', '/watch'],
-      url: '/UserList',
       index: 0,
       size: 3,
       total: 0,
@@ -71,60 +71,40 @@ export default {
     }
   },
   methods: {
-    getUrl (type) {
-      return this.url + this.para[type] + '?index=' + this.index + '&size=' + this.size
-    },
-    refresh (request) {
-      this.$axios(request)
-        .then(successResponse => {
-          if (successResponse.data.code === 200) {
-            this.$store.commit({
-              type: 'refreshUserItems',
-              list: successResponse.data.result
-            })
-          }
+    refreshUserList (res) {
+      if (res.code === 200) {
+        this.$store.commit({
+          type: 'refreshUserItems',
+          list: res.result
         })
+      }
     },
     useWatch () {
-      let url = this.getUrl(1)
-      this.refresh(url)
+      getUserListSortByWatch({}, this.index, this.size)
+        .then(res => { this.refreshUserList(res) })
       this.status = 1
     },
     useLove () {
-      let url = this.getUrl(0)
-      this.refresh(url)
+      getUserListSortByLove({}, this.index, this.size)
+        .then(res => { this.refreshUserList(res) })
       this.status = 0
     },
     changePage () {
       this.index = this.currentPage - 1
-      let getUrl = this.getUrl(this.status)
-      this.refresh(getUrl)
+      if (this.status === 0) {
+        this.useLove()
+      } else if (this.status === 1) {
+        this.useWatch()
+      }
     }
   },
   beforeCreate () {
-    this.$axios
-      .request('/UserList/watch?index=0&size=3')
-      .then(successResponse => {
-        console.log(successResponse)
-        if (successResponse.data.code === 200) {
-          this.$store.commit({
-            type: 'refreshUserItems',
-            list: successResponse.data.result
-          })
-        }
-      })
-    console.log(this.userList)
+    getUserListSortByWatch({}, 0, 3)
+      .then(res => { this.refreshUserList(res) })
   },
   created () {
-    let countUrl = '/Page/count/user'
-    this.$axios
-      .request(countUrl)
-      .then(successResponse => {
-        if (successResponse.data.code === 200) {
-          this.total = successResponse.data.result
-          console.log(this.total)
-        }
-      })
+    getUserCount({})
+      .then(res => { this.total = res.result })
   }
 }
 </script>

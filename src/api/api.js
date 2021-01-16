@@ -38,3 +38,33 @@ export const getUserMessage = (data, userId) =>
 
 export const getUserInstruction = (data, userId) =>
   get('/UserMessage/instruction/' + userId, data)
+
+export const getPaperListSortByTime = (data, index, size) =>
+  get('/PaperList/time?index=' + index + '&size=' + size, data)
+
+export const getPaperListSortByWatch = (data, index, size) =>
+  get('/PaperList/watch?index=' + index + '&size=' + size, data)
+
+export const getPaperListSortByLove = (data, index, size) =>
+  get('/PaperList/love?index=' + index + '&size=' + size, data)
+
+export const getUserPaperListSortByTime = (data, index, size, userId) =>
+  get('/PaperList/' + userId + '/time?index=' + index + '&size' + size, data)
+
+export const getUserPaperListSortByWatch = (data, index, size, userId) =>
+  get('/PaperList/' + userId + '/watch?index=' + index + '&size=' + size, data)
+
+export const getUserPaperListSortByLove = (data, index, size, userId) =>
+  get('/PaperList/' + userId + '/watch?index=' + index + '&size=' + size, data)
+
+export const getPaperCount = (data) => get('/Page/count', data)
+
+export const getPaperCountByUserId = (data, userId) => get('/Page/count/' + userId, data)
+
+export const getUserCount = (data) => get('/Page/count/user', data)
+
+export const getUserListSortByLove = (data, index, size) =>
+  get('/UserList/love?index=' + index + '&size=' + size, data)
+
+export const getUserListSortByWatch = (data, index, size) =>
+  get('/UserList/watch?index=' + index + '&size=' + size, data)
