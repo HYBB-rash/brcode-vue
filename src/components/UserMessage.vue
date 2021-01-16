@@ -12,8 +12,7 @@
       </el-row>
       <el-row style="min-height: 15%">
         <Username v-bind:user-id="message.id"
-                  v-bind:big="true"
-                  v-bind:username="message.username"></Username>
+                  v-bind:big="true"></Username>
 <!--        <h3 style="text-align: center">-->
 <!--          {{message.username}}-->
 <!--        </h3>-->

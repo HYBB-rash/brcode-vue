@@ -10,13 +10,25 @@
 </template>
 
 <script>
+import { getUsernameByUserId } from '../api/api'
+
 export default {
   name: 'Username',
-  props: ['userId', 'username', 'big'],
+  props: ['userId', 'big'],
+  data () {
+    return {
+      username: ''
+    }
+  },
   methods: {
     jump (userId) {
       this.$router.replace({path: '/userHome/' + userId})
     }
+  },
+  created () {
+    console.log(this.$props.userId)
+    getUsernameByUserId({}, this.$props.userId)
+      .then(res => { this.username = res.result })
   }
 }
 </script>

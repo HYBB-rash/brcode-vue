@@ -72,3 +72,12 @@ export const getUserListSortByWatch = (data, index, size) =>
 export const getPaperEdit = (data) => post('/GetPaperContent', data)
 
 export const deletePaper = (data, paperId) => get('/Delete/paper/' + paperId)
+
+export const getAllComments = (data, userId, index, size) =>
+  get('/comment/all?userId=' + userId + '&index=' + index + '&size=' + size, data)
+
+export const getCommentCount = (data, userId) =>
+  get('/Page/count/comment?userId=' + userId, data)
+
+export const deleteCommentByCommentId = (data, commentId) =>
+  get('/comment/delete/' + commentId, data)

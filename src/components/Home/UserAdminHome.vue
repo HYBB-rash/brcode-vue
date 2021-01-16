@@ -22,62 +22,57 @@
       </el-menu>
     </el-aside>
     <el-main>
-      <el-card class="choices" style="width: 70%;">
-<!--        <div>{{this.paperList}}</div>-->
-        <div slot="header">
-          <b>文章管理</b>
-        </div>
-        <el-table :data="paperList"
-                  border>
-          <el-table-column
-            prop="title"
-            label="标题"></el-table-column>
-          <el-table-column
-            prop="watch"
-            width="80px"
-            label="浏览量"></el-table-column>
-          <el-table-column
-            prop="love"
-            width="80px"
-            label="点赞"></el-table-column>
-          <el-table-column
-            prop="time"
-            label="最后修改时间"></el-table-column>
-          <el-table-column
-            prop="id"
-            label="操作">
-            <template slot-scope="scope">
-              <el-button type="text" size="small" @click="editPaper(scope.row.id)" >编辑文章</el-button>
-              <el-button type="text" size="small" @click="deletePaper(scope.row.id)" >删除文章</el-button>
-            </template>
-          </el-table-column>
-        </el-table>
-        <div style="text-align: center">
-          <el-pagination layout="prev, pager, next"
-                         :current-page.sync="currentPage"
-                         :page-size="size"
-                         @current-change="changPage"
-                         :total="total" background>
-          </el-pagination>
-        </div>
-      </el-card>
+      <paper-table v-if="Number(show) === 0"></paper-table>
+      <comment-table v-else-if="Number(show) === 1"></comment-table>
+<!--      <el-card v-else-if="Number(show) === 1" class="choices" style="width: 70%">-->
+<!--        <div slot="header">-->
+<!--          <b>评论管理</b>-->
+<!--        </div>-->
+<!--        <el-table :data="commentList"-->
+<!--                  border>-->
+<!--          <el-table-column-->
+<!--            prop="status"-->
+<!--            width="80px"-->
+<!--            label="状态"></el-table-column>-->
+<!--          <el-table-column-->
+<!--            prop="content"-->
+<!--            width="160px"-->
+<!--            label="内容"></el-table-column>-->
+<!--          <el-table-column-->
+<!--            prop="time"-->
+<!--            label="最后修改时间"></el-table-column>-->
+<!--          <el-table-column-->
+<!--            prop="id"-->
+<!--            width="320px"-->
+<!--            label="操作">-->
+<!--            <template slot-scope="scope">-->
+<!--              <el-button type="text" @click="scope.row.id" size="small">删除评论</el-button>-->
+<!--            </template>-->
+<!--          </el-table-column>-->
+<!--        </el-table>-->
+<!--      </el-card>-->
     </el-main>
   </el-container>
 </template>
 
 <script>
-import { getUserPaperListSortByTime, getPaperCountByUserId, getPaperEdit, deletePaper } from '../../api/api'
+import Username from '../Username'
+import PaperTable from '../PaperTable'
+import CommentTable from '../CommentTable'
 
 export default {
   name: 'UserAdminHome',
+  components: {CommentTable, PaperTable, Username},
   data () {
     return {
       paperList: this.$store.state.paperList.paperList,
+      commentList: this.$store.state.comments.comments,
       userId: this.$store.state.login.id,
       index: 0,
       size: 6,
       total: 0,
-      currentPage: 1
+      currentPage: 1,
+      show: 0
     }
   },
   methods: {
@@ -89,49 +84,29 @@ export default {
         })
       }
     },
-    getPaperList () {
-      getUserPaperListSortByTime({}, this.index, this.size, this.userId)
-        .then(res => { this.refreshPaperList(res) })
-    },
-    changPage () {
-      this.index = this.currentPage - 1
-      this.getPaperList()
+    refreshComment (res) {
+      if (res.code === 200) {
+        this.$store.commit({
+          type: 'refreshComments',
+          comments: res.result
+        })
+      }
     },
     handleSelect (key, keyPath) {
-      console.log('demo')
+      this.show = key
+      if (Number(key) === 0) {
+        //   getPaperCountByUserId({}, this.userId)
+        //     .then(res => { this.total = res.result })
+        //   getUserPaperListSortByTime({}, 0, 10, this.userId)
+        //     .then(res => { this.refreshPaperList(res) })
+        // } else if (Number(key) === 1) {
+        //   getAllComments({}, this.userId, 0, 10)
+        //     .then(res => { this.refreshComment(res) })
+        // }
+      }
     },
-    editPaper (paperId) {
-      getPaperEdit({
-        paperId: paperId,
-        userId: this.userId
-      })
-        .then(res => {
-          if (res.code === 200) {
-            this.$store.commit({
-              type: 'refreshEditPaper',
-              paper: res.result
-            })
-            this.$router.replace('/editPage')
-          }
-        })
-    },
-    deletePaper (paperId) {
-      deletePaper({}, paperId)
-        .then(res => {
-          if (res.result) this.$message.success('删除成功')
-          else this.$message.error('删除失败')
-        })
-      getPaperCountByUserId({}, this.userId)
-        .then(res => { this.total = res.result })
-      getUserPaperListSortByTime({}, 0, 10, this.userId)
-        .then(res => { this.refreshPaperList(res) })
+    created () {
     }
-  },
-  created () {
-    getPaperCountByUserId({}, this.userId)
-      .then(res => { this.total = res.result })
-    getUserPaperListSortByTime({}, 0, 10, this.userId)
-      .then(res => { this.refreshPaperList(res) })
   }
 }
 </script>
